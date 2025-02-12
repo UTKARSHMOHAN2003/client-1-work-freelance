@@ -42,7 +42,7 @@ export default function ProductDetailsContainer({product}) {
                 <span className="discount-percentage" > ({product.discountPercent}% OFF) </span>
                 <p className="tax-detail" > inclusive of all taxes </p>
             </div>
-            <div className="product-size-details" >
+            {/* <div className="product-size-details" >
                 <p className="select-size-title" > SELECT SIZE </p>
                 {
                     sizes.map((size,index)=>{
@@ -71,17 +71,14 @@ export default function ProductDetailsContainer({product}) {
                         )
                     })
                 }
-            </div>
+            </div> */}
             <div className="product-actions" >
                 <>
                     <button
                         style={isAddedToBag ? {display:'none'} : {display:'inline'} }
                         className="bag-handler-button"
                         onClick={()=>{ 
-                            if( selectedSize === null ){
-                                window.alert("Please select a size");
-                            }
-                            else
+                    
                                 dispatch(addItemToBag(product , selectedSize));
                         }}
                     >

@@ -59,14 +59,14 @@ export default function ItemCard( {item , index} ) {
                     &nbsp;
                     WISHLISTED
                 </button>
-                <p className="available-sizes" >
+                {/* <p className="available-sizes" >
                     <span
                         style={{color: 'black'}}
                     >
                         Sizes
                     </span>
                     : 38, 40, 42, 44, 46
-                </p>
+                </p> */}
             </div>
             <div className="item-list-mobile-action" >
                 <button 

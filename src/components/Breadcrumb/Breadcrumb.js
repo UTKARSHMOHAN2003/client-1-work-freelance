@@ -8,11 +8,11 @@ export default function Breadcrumb( {addItem} ) {
             link: '/'
         },
         {
-            name: 'Clothings',
+            name: 'Category',
             link: '/'
         },
         {
-            name: 'T-Shirts',
+            name: 'PRODUCTS',
             link: '/'
         }
     ]

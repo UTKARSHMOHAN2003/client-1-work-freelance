@@ -10,7 +10,7 @@ export default function BagItemCard({ item }) {
     const wishlist = useSelector(state => state.wishlistStore);
     console.log(item);
     let isWishListed = isInWishList( wishlist,item )
-    const sizes=[38,40,42,44,46];
+   const sizes=[38,40,42,44,46];
     return (
         <div className="bag-item-card"  >
             <Link to={`/${item.id}`}>
@@ -64,7 +64,7 @@ export default function BagItemCard({ item }) {
                         <i class="fas fa-plus-square quantity-button "></i>
                         </span>
                     </div>
-                    <div className="bag-item-size" >
+                    {/* <div className="bag-item-size" >
                         <span className="bag-item-size-title" >Size : </span>
                         {
                             sizes.map((size,index)=>{
@@ -86,7 +86,7 @@ export default function BagItemCard({ item }) {
                                 )
                             })
                         }
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

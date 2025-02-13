@@ -8,13 +8,57 @@ import {
 
 const defaultBagState = [];
 
+const loadRazorpay = () => {
+    return new Promise((resolve) => {
+        const script = document.createElement('script');
+        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+        script.onload = () => resolve(true);
+        script.onerror = () => resolve(false);
+        document.body.appendChild(script);
+    });
+};
+
+const initiatePayment = async (amount) => {
+    const res = await loadRazorpay();
+    
+    if (!res) {
+        alert('Razorpay SDK failed to load');
+        return;
+    }
+
+    const options = {
+        key: "rzp_test_olUFCAfKNLr1gI", // Replace with your Razorpay Key ID
+        amount: amount * 100, // Amount in paise
+        currency: 'INR',
+        name: 'Your Store Name',
+        description: 'Purchase Description',
+        handler: function (response) {
+            // Handle successful payment
+            alert('Payment Successful! Payment ID: ' + response.razorpay_payment_id);
+            // Clear the bag after successful payment
+            return [];
+        },
+        prefill: {
+            name: '',
+            email: '',
+            contact: ''
+        },
+        theme: {
+            color: '#3399cc'
+        }
+    };
+
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+};
+
 export default function bag(state = defaultBagState, action) {
     switch (action.type) {
         case ADD_TO_BAG:
-            var alreadyPresent=false;
+            var alreadyPresent = false;
             state.map(item => {
                 if(item.id == action.item.id){
-                    alreadyPresent=true;
+                    alreadyPresent = true;
                 }
             })
             console.log(alreadyPresent);
@@ -25,8 +69,14 @@ export default function bag(state = defaultBagState, action) {
         case REMOVE_FROM_BAG:
             return state.filter(item => item.id !== action.item.id);
         case EMPTY_BAG:
-            window.alert('Checkout Successful');
-            return [];
+            // Calculate total amount
+            const totalAmount = state.reduce((total, item) => {
+                return total + (item.price * item.quantity);
+            }, 0);
+            
+            // Initiate Razorpay payment
+            initiatePayment(totalAmount);
+            return state; // Don't empty the bag until payment is successful
         case SET_QUANTITY:
             return state.map(item => {
                 if (item.id === action.item.id) {
